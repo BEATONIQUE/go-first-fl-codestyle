@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+func randint(min, max int) int {
+	return rand.Intn(max-min) + min
+}
+
 func attack(charName, charClass string) string {
 	if charClass == "warrior" {
 		return fmt.Sprintf("%s нанес урон противнику равный %d.", charName, 5+randint(3, 5))
@@ -77,19 +81,17 @@ func start_training(charName, charClass string) string {
 		fmt.Print("Введи команду: ")
 		fmt.Scanf("%s\n", &cmd)
 
-		if cmd == "attack" {
+		switch {
+		case cmd == "attack":
 			fmt.Println(attack(charName, charClass))
-		}
-
-		if cmd == "defence" {
+		case cmd == "defence":
 			fmt.Println(defence(charName, charClass))
-		}
-
-		if cmd == "special" {
+		case cmd == "special":
 			fmt.Println(special(charName, charClass))
+		default:
+			fmt.Println("Неизвестная команда")
 		}
 	}
-
 	return "тренировка окончена"
 }
 
@@ -103,15 +105,12 @@ func choiseCharClass() string {
 		if charClass == "warrior" {
 			fmt.Println("Воитель — дерзкий воин ближнего боя. Сильный, выносливый и отважный.")
 		}
-
 		if charClass == "mage" {
 			fmt.Println("Маг — находчивый воин дальнего боя. Обладает высоким интеллектом.")
 		}
-
 		if charClass == "healer" {
 			fmt.Println("Лекарь — могущественный заклинатель. Черпает силы из природы, веры и духов.")
 		}
-
 		fmt.Print("Нажми (Y), чтобы подтвердить выбор, или любую другую кнопку, чтобы выбрать другого персонажа: ")
 		fmt.Scanf("%s\n", &approveChoice)
 		approveChoice = strings.ToLower(approveChoice)
@@ -135,8 +134,4 @@ func main() {
 	charClass := choiseCharClass()
 
 	fmt.Println(start_training(charName, charClass))
-}
-
-func randint(min, max int) int {
-	return rand.Intn(max-min) + min
 }
